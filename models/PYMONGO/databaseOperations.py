@@ -500,3 +500,5 @@ def update_existing(document_id, data):
 def remove_data(document_id):
     document = collection.delete_one({'_id':ObjectId(document_id)})
     return document.acknowledged
+#CLOSE CONNECTION
+connection.close()
