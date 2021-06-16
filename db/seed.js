@@ -1,11 +1,11 @@
-const manyGifs = require('./seed.json');
+const manyMenus = require('./seed.json');
 const mongoose = require('./connection');
-const Gif = require('../models/gifs');
+const Menu = require('../models/menus');
 const db = mongoose.connection;
 
-Gif.deleteMany({}).then(() => {
-	Gif.insertMany(manyGifs).then((gifs) => {
-		console.log('menu', gifs);
+Menu.deleteMany({}).then(() => {
+	Menu.insertMany(manyMenus).then((menus) => {
+		console.log('menu', menus);
 		db.close();
 	});
 });
