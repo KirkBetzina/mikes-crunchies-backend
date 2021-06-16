@@ -1,11 +1,13 @@
 import pymongo
 from pymongo import collection
-
+from bson import ObjectId
+#CONNECT TO DATABASE
 connection = pymongo.MongoClient('localhost', 27017)
-
+#CREATE DATABASE
 database = connection['mikes-crunchies-backend']
-
+#CREATE COLLECTION
 collection = database['mikes-menu']
+print('database connected')
 
 data = {
      "data": [
@@ -470,4 +472,20 @@ data = {
     }]
 }
 
+
 collection.insert_one(data)
+
+def insert_data(data):
+    document = collection.insert_one(data)
+    return document.inserted_id
+
+def update_or_create(document_id, data):
+    #TO AVOID DUPLICATES - THIS WILL CREATE A NEW DOCUMENT IF SAME ID DOESNT EXIST
+    document = collection.update_one({'_id':ObjectId(document_id)},{'$set':data},upsert=True)
+    return document.acknowledged
+
+   
+
+def remove_data(document_id):
+    document = collection.delete_one({'_id':ObjectId(document_id)})
+    return document.acknowledged
